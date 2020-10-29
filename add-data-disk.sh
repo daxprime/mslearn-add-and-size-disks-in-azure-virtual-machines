@@ -12,10 +12,10 @@
 sudo fdisk /dev/sdc <<EOF
 n
 p
+1
 
 
 
-p
 w
 EOF
 
@@ -31,7 +31,7 @@ sudo mkdir /uploads
 sudo mount /dev/sdc1 /uploads
 
 # Get the UUID of the new drive, /dev/sdc1, and save it as a variable.
-UUID=$(sudo -i blkid | grep '/dev/sdc1' | perl -pe 's/.+([a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}).+/$1/')
+UUID=$(sudo -i blkid | grep '/dev/sdc1' | cut -d"\"" -f2 )
 
 # Add the UUID to /etc/fstab so that the drive is mounted automatically after reboot.
 # We use the UUID instead of the device name (/dev/sdc1) because the UUID avoids the incorrect 
